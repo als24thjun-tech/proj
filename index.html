@@ -493,162 +493,248 @@
       letter-spacing: 1px;
     }
 
-    /* ===== SUMMARY SLIDE ===== */
-    .sum-header {
-      background: linear-gradient(135deg, var(--deep) 0%, var(--ocean) 100%);
+    /* ===== SUMMARY SLIDE (redesigned) ===== */
+    #slide0 { background: #f1f5f9; }
+
+    /* Hero – 다크 그라디언트, sticky 없이 함께 스크롤 */
+    .sum-hero {
+      background: linear-gradient(150deg, #06142b 0%, #0c2a4a 45%, #0a3d6b 100%);
+      padding: 24px 20px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .sum-hero::before {
+      content: '';
+      position: absolute;
+      top: -50px; right: -50px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(144,224,239,0.13) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .sum-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -20px; left: -40px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(247,127,0,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .sum-hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(144,224,239,0.14);
+      border: 1px solid rgba(144,224,239,0.28);
+      color: #90e0ef;
+      border-radius: 100px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      margin-bottom: 18px;
+    }
+    .sum-hero-title {
+      font-size: 1.75rem;
+      font-weight: 900;
       color: white;
-      padding: 14px 16px 12px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+      margin-bottom: 6px;
     }
-    .sum-header .day-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 2.5px; opacity: 0.8; }
-    .sum-header .day-title { font-size: 1rem; font-weight: 800; margin-top: 2px; }
-    .sum-header .day-theme { font-size: 0.76rem; opacity: 0.9; margin-top: 4px; line-height: 1.4; }
+    .sum-hero-title span { color: #90e0ef; }
+    .sum-hero-sub {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .sum-hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .sum-hero-chip {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 100px;
+      padding: 5px 12px;
+      font-size: 0.71rem;
+      color: rgba(255,255,255,0.88);
+      font-weight: 500;
+    }
 
-    .sum-body { padding: 14px 14px 70px; }
+    /* Body */
+    .sum-body { padding: 18px 16px 80px; }
 
-    /* flight strip */
-    .sum-flight-strip {
+    .sum-sec-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.59rem;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: 11px;
+    }
+    .sum-sec-label::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; }
+
+    /* Boarding-pass style flight card */
+    .sum-bp-card {
       background: white;
-      border-radius: 14px;
-      box-shadow: 0 2px 10px rgba(0,100,200,0.08);
-      padding: 12px 14px;
-      margin-bottom: 10px;
-      border: 1px solid #dbeafe;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+      margin-bottom: 20px;
     }
-    .sum-flight-strip-label {
+    .sum-bp {
+      padding: 14px 16px 12px;
+    }
+    .sum-bp-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .sum-bp-airline {
       font-size: 0.6rem;
       font-weight: 800;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: var(--ocean);
-      margin-bottom: 10px;
+      color: #94a3b8;
     }
-    .sum-fl-row {
+    .sum-bp-badge {
+      font-size: 0.63rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 100px;
+    }
+    .sum-bp-badge.go  { background: #dbeafe; color: #1e40af; }
+    .sum-bp-badge.ret { background: #fff0d9; color: #9a3412; }
+    .sum-bp-route {
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 0;
     }
-    .sum-fl-row + .sum-fl-row {
-      border-top: 1px dashed #e2e8f0;
-    }
-    .sum-fl-apt {
-      flex: 1;
-      text-align: center;
-    }
-    .sum-fl-code { font-size: 1.3rem; font-weight: 900; color: var(--deep); letter-spacing: 1px; }
-    .sum-fl-city { font-size: 0.62rem; color: var(--muted); margin-top: 1px; }
-    .sum-fl-time { font-size: 0.82rem; font-weight: 700; color: var(--text); margin-top: 2px; }
-    .sum-fl-mid { flex: 1; text-align: center; }
-    .sum-fl-arr { display: flex; align-items: center; gap: 3px; justify-content: center; }
-    .sum-fl-line { flex: 1; height: 1px; background: #bfdbfe; max-width: 30px; }
-    .sum-fl-icon { font-size: 0.9rem; }
-    .sum-fl-dur  { font-size: 0.62rem; color: var(--muted); margin-top: 3px; }
-    .sum-fl-num  { font-size: 0.62rem; color: var(--ocean); font-weight: 700; margin-top: 2px; }
-    .sum-fl-dir  {
-      font-size: 0.6rem;
-      font-weight: 700;
+    .sum-bp-apt { text-align: center; flex: 1; }
+    .sum-bp-code {
+      font-size: 1.65rem;
+      font-weight: 900;
+      color: #0f172a;
       letter-spacing: 1px;
-      text-transform: uppercase;
-      width: 28px;
-      text-align: center;
-      flex-shrink: 0;
+      line-height: 1;
     }
-    .sum-fl-dir.go  { color: white; background: var(--ocean); border-radius: 4px; padding: 2px 4px; }
-    .sum-fl-dir.ret { color: white; background: var(--accent); border-radius: 4px; padding: 2px 4px; }
-
-    /* meta row */
-    .sum-meta-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-    .sum-meta-card {
-      flex: 1;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,100,200,0.07);
-      padding: 11px 12px;
+    .sum-bp-city { font-size: 0.6rem; color: #94a3b8; margin-top: 2px; }
+    .sum-bp-time { font-size: 0.85rem; font-weight: 700; color: #1e293b; margin-top: 5px; }
+    .sum-bp-mid { text-align: center; flex: 1; }
+    .sum-bp-arrow {
       display: flex;
       align-items: center;
-      gap: 9px;
-      border: 1px solid #e2e8f0;
+      justify-content: center;
+      gap: 2px;
+      margin-bottom: 4px;
     }
-    .sum-meta-icon { font-size: 1.3rem; flex-shrink: 0; }
-    .sum-meta-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
-    .sum-meta-val   { font-size: 0.78rem; font-weight: 700; color: var(--text); margin-top: 2px; line-height: 1.35; }
+    .sum-bp-aline { flex: 1; height: 1px; background: #e2e8f0; max-width: 28px; }
+    .sum-bp-plane { font-size: 1.1rem; }
+    .sum-bp-dur  { font-size: 0.6rem; color: #94a3b8; }
+    .sum-bp-num  { font-size: 0.6rem; font-weight: 700; color: var(--ocean); margin-top: 3px; }
+    .sum-bp-footer {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-top: 11px;
+      padding-top: 10px;
+      border-top: 1px solid #f1f5f9;
+    }
+    .sum-bp-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 3px 9px;
+      font-size: 0.64rem;
+      color: #475569;
+      font-weight: 600;
+    }
+    /* 두 항공편 사이 구분선 */
+    .sum-bp-separator {
+      display: flex;
+      align-items: center;
+      background: #f8fafc;
+      border-top: 1.5px dashed #e2e8f0;
+      border-bottom: 1.5px dashed #e2e8f0;
+      padding: 4px 0 4px 14px;
+      gap: 6px;
+      font-size: 0.58rem;
+      color: #cbd5e1;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .sum-bp-sep-line { flex: 1; }
 
-    /* day summary cards */
+    /* Day cards – colored left panel */
     .sum-day-card {
       background: white;
-      border-radius: 14px;
-      box-shadow: 0 2px 10px rgba(0,100,200,0.07);
+      border-radius: 16px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.07);
       margin-bottom: 10px;
       overflow: hidden;
       display: flex;
       cursor: pointer;
-      transition: transform 0.15s;
+      transition: transform 0.15s, box-shadow 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
-    .sum-day-card:active { transform: scale(0.985); }
-    .sum-day-stripe { width: 5px; flex-shrink: 0; }
-    .sum-day-body   { flex: 1; padding: 12px 13px; }
+    .sum-day-card:active { transform: scale(0.982); box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
 
-    .sum-day-top {
+    .sum-day-left {
+      width: 64px;
+      flex-shrink: 0;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 7px;
-      margin-bottom: 6px;
+      justify-content: center;
+      padding: 16px 6px;
+      gap: 4px;
     }
-    .sum-day-badge {
-      font-size: 0.62rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 3px 9px;
-      border-radius: 20px;
-      flex-shrink: 0;
-    }
-    .sum-day-date  { font-size: 0.72rem; color: var(--muted); }
-    .sum-day-emoji { font-size: 1.15rem; margin-left: auto; }
+    .sum-day-lbl  { font-size: 0.52rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+    .sum-day-num  { font-size: 1.8rem; font-weight: 900; color: white; line-height: 1; }
+    .sum-day-ico  { font-size: 1rem; margin-top: 2px; }
 
-    .sum-day-title {
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: var(--text);
-      margin-bottom: 8px;
-      line-height: 1.3;
-    }
-
-    .sum-day-items { display: flex; flex-direction: column; gap: 3px; }
-    .sum-day-item {
+    .sum-day-right {
+      flex: 1;
+      padding: 13px 13px 12px 12px;
+      min-width: 0;
       display: flex;
-      align-items: flex-start;
-      gap: 6px;
-      font-size: 0.73rem;
-      color: var(--muted);
-      line-height: 1.45;
+      flex-direction: column;
     }
-    .sum-dt {
-      font-size: 0.65rem;
-      font-weight: 700;
-      color: var(--ocean);
-      min-width: 36px;
-      flex-shrink: 0;
-      padding-top: 1px;
+    .sum-day-date-line { font-size: 0.64rem; color: #94a3b8; margin-bottom: 3px; }
+    .sum-day-title {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.3;
+      margin-bottom: 9px;
     }
-    .sum-dd::before { content: '·'; font-weight: 900; color: var(--ocean); margin-right: 3px; }
-    .sum-dd { color: #374151; font-size: 0.73rem; }
-
-    .sum-day-footer {
+    .sum-day-items { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .sum-day-item  { display: flex; align-items: flex-start; gap: 5px; font-size: 0.71rem; line-height: 1.45; }
+    .sum-dt { font-size: 0.62rem; font-weight: 700; color: #94a3b8; min-width: 34px; flex-shrink: 0; padding-top: 1px; }
+    .sum-dd { color: #374151; }
+    .sum-day-goto {
       display: flex;
       justify-content: flex-end;
-      margin-top: 7px;
-      font-size: 0.65rem;
-      color: var(--ocean);
-      opacity: 0.6;
+      margin-top: 9px;
+      font-size: 0.64rem;
+      color: #94a3b8;
+      letter-spacing: 0.5px;
     }
 
     /* ===== RESPONSIVE ===== */
@@ -688,180 +774,194 @@
 
     <!-- ========== 요약 ========== -->
     <div class="slide" id="slide0">
-      <div class="sum-header">
-        <div class="day-label">OVERVIEW · 전체 일정 한눈에 보기</div>
-        <div class="day-title">📋 4박 5일 코타키나발루 여행</div>
-        <div class="day-theme">2026.06.11(목) — 06.15(월) &nbsp;·&nbsp; 재인재우네 가족 4인</div>
+
+      <!-- 다크 히어로 -->
+      <div class="sum-hero">
+        <div class="sum-hero-tag">✈ Family Trip · Malaysia</div>
+        <div class="sum-hero-title">코타키나<span>발루</span></div>
+        <div class="sum-hero-sub">
+          재인재우네 가족여행<br>
+          2026년 6월 11일 — 15일 · 4박 5일
+        </div>
+        <div class="sum-hero-chips">
+          <div class="sum-hero-chip"><span>🏨</span> 샹그릴라 탄중아루</div>
+          <div class="sum-hero-chip"><span>👨‍👩‍👧‍👦</span> 4인 가족</div>
+          <div class="sum-hero-chip"><span>🌊</span> 말레이시아 코타키나발루</div>
+        </div>
       </div>
 
       <div class="sum-body">
 
-        <!-- 항공편 -->
-        <div class="sum-flight-strip">
-          <div class="sum-flight-strip-label">✈ 항공편 정보</div>
+        <!-- 항공편 (보딩패스 스타일) -->
+        <div class="sum-sec-label">✈ 항공편 정보</div>
+        <div class="sum-bp-card">
           <!-- 가는 편 -->
-          <div class="sum-fl-row">
-            <div class="sum-fl-dir go">GO</div>
-            <div class="sum-fl-apt">
-              <div class="sum-fl-code">ICN</div>
-              <div class="sum-fl-city">인천</div>
-              <div class="sum-fl-time">19:10</div>
+          <div class="sum-bp">
+            <div class="sum-bp-top">
+              <span class="sum-bp-airline">제주항공 Jeju Air</span>
+              <span class="sum-bp-badge go">출국 Departure</span>
             </div>
-            <div class="sum-fl-mid">
-              <div class="sum-fl-arr">
-                <div class="sum-fl-line"></div>
-                <div class="sum-fl-icon">✈️</div>
-                <div class="sum-fl-line"></div>
+            <div class="sum-bp-route">
+              <div class="sum-bp-apt">
+                <div class="sum-bp-code">ICN</div>
+                <div class="sum-bp-city">인천 Incheon</div>
+                <div class="sum-bp-time">19:10</div>
               </div>
-              <div class="sum-fl-dur">5시간 20분</div>
-              <div class="sum-fl-num">7C2603 · 6/11(목)</div>
+              <div class="sum-bp-mid">
+                <div class="sum-bp-arrow">
+                  <div class="sum-bp-aline"></div>
+                  <div class="sum-bp-plane">✈️</div>
+                  <div class="sum-bp-aline"></div>
+                </div>
+                <div class="sum-bp-dur">5시간 20분</div>
+                <div class="sum-bp-num">7C2603 · 6/11(목)</div>
+              </div>
+              <div class="sum-bp-apt">
+                <div class="sum-bp-code">BKI</div>
+                <div class="sum-bp-city">코타키나발루</div>
+                <div class="sum-bp-time">23:30</div>
+              </div>
             </div>
-            <div class="sum-fl-apt">
-              <div class="sum-fl-code">BKI</div>
-              <div class="sum-fl-city">코타키나발루</div>
-              <div class="sum-fl-time">23:30</div>
+            <div class="sum-bp-footer">
+              <span class="sum-bp-tag">🪑 17A · 17B · 17C · 17D</span>
+              <span class="sum-bp-tag">👨‍👩‍👧‍👦 4인</span>
             </div>
           </div>
+          <!-- 구분선 -->
+          <div class="sum-bp-separator">
+            <div class="sum-bp-sep-line"></div>
+            ✂ &nbsp;return flight
+            <div class="sum-bp-sep-line"></div>
+          </div>
           <!-- 오는 편 -->
-          <div class="sum-fl-row">
-            <div class="sum-fl-dir ret">RET</div>
-            <div class="sum-fl-apt">
-              <div class="sum-fl-code">BKI</div>
-              <div class="sum-fl-city">코타키나발루</div>
-              <div class="sum-fl-time">00:30</div>
+          <div class="sum-bp">
+            <div class="sum-bp-top">
+              <span class="sum-bp-airline">제주항공 Jeju Air</span>
+              <span class="sum-bp-badge ret">귀국 Return</span>
             </div>
-            <div class="sum-fl-mid">
-              <div class="sum-fl-arr">
-                <div class="sum-fl-line"></div>
-                <div class="sum-fl-icon">✈️</div>
-                <div class="sum-fl-line"></div>
+            <div class="sum-bp-route">
+              <div class="sum-bp-apt">
+                <div class="sum-bp-code">BKI</div>
+                <div class="sum-bp-city">코타키나발루</div>
+                <div class="sum-bp-time">00:30</div>
               </div>
-              <div class="sum-fl-dur">5시간 20분</div>
-              <div class="sum-fl-num">7C2604 · 6/15(월)</div>
+              <div class="sum-bp-mid">
+                <div class="sum-bp-arrow">
+                  <div class="sum-bp-aline"></div>
+                  <div class="sum-bp-plane">✈️</div>
+                  <div class="sum-bp-aline"></div>
+                </div>
+                <div class="sum-bp-dur">5시간 20분</div>
+                <div class="sum-bp-num">7C2604 · 6/15(월)</div>
+              </div>
+              <div class="sum-bp-apt">
+                <div class="sum-bp-code">ICN</div>
+                <div class="sum-bp-city">인천 Incheon</div>
+                <div class="sum-bp-time">06:50</div>
+              </div>
             </div>
-            <div class="sum-fl-apt">
-              <div class="sum-fl-code">ICN</div>
-              <div class="sum-fl-city">인천</div>
-              <div class="sum-fl-time">06:50</div>
+            <div class="sum-bp-footer">
+              <span class="sum-bp-tag">🪑 17A · 17B · 17C · 17D</span>
+              <span class="sum-bp-tag">👨‍👩‍👧‍👦 4인</span>
             </div>
           </div>
         </div>
 
-        <!-- 숙소 & 좌석 -->
-        <div class="sum-meta-row">
-          <div class="sum-meta-card">
-            <div class="sum-meta-icon">🏨</div>
-            <div>
-              <div class="sum-meta-label">숙소 (3박)</div>
-              <div class="sum-meta-val">샹그릴라 탄중아루</div>
-            </div>
-          </div>
-          <div class="sum-meta-card">
-            <div class="sum-meta-icon">🪑</div>
-            <div>
-              <div class="sum-meta-label">비행기 좌석</div>
-              <div class="sum-meta-val">17A · 17B · 17C · 17D</div>
-            </div>
-          </div>
-        </div>
+        <!-- DAY 카드 -->
+        <div class="sum-sec-label">📅 일별 일정</div>
 
         <!-- DAY 1 -->
         <div class="sum-day-card" onclick="goTo(1)">
-          <div class="sum-day-stripe" style="background:#1a5c8f;"></div>
-          <div class="sum-day-body">
-            <div class="sum-day-top">
-              <div class="sum-day-badge" style="background:#e8f0f8;color:#1a5c8f;">DAY 1</div>
-              <div class="sum-day-date">6월 11일 목요일</div>
-              <div class="sum-day-emoji">✈️</div>
-            </div>
+          <div class="sum-day-left" style="background:linear-gradient(160deg,#1e3a6e,#2563a8);">
+            <div class="sum-day-lbl">DAY</div>
+            <div class="sum-day-num">1</div>
+            <div class="sum-day-ico">✈️</div>
+          </div>
+          <div class="sum-day-right">
+            <div class="sum-day-date-line">6월 11일 목요일</div>
             <div class="sum-day-title">출발 → 코타키나발루 도착</div>
             <div class="sum-day-items">
               <div class="sum-day-item"><div class="sum-dt">13:00</div><div class="sum-dd">집 → 인천공항 T1 리무진 출발</div></div>
-              <div class="sum-day-item"><div class="sum-dt">19:10</div><div class="sum-dd">제주항공 7C2603 탑승 · 좌석 17A·B·C·D</div></div>
-              <div class="sum-day-item"><div class="sum-dt">23:30</div><div class="sum-dd">코타키나발루 국제공항 도착</div></div>
-              <div class="sum-day-item"><div class="sum-dt">심야</div><div class="sum-dd">샹그릴라 탄중아루 체크인 🏨</div></div>
+              <div class="sum-day-item"><div class="sum-dt">19:10</div><div class="sum-dd">제주항공 7C2603 탑승</div></div>
+              <div class="sum-day-item"><div class="sum-dt">23:30</div><div class="sum-dd">코타키나발루 공항 도착 · 호텔 이동</div></div>
             </div>
-            <div class="sum-day-footer">자세히 보기 ›</div>
+            <div class="sum-day-goto">자세히 보기 ›</div>
           </div>
         </div>
 
         <!-- DAY 2 -->
         <div class="sum-day-card" onclick="goTo(2)">
-          <div class="sum-day-stripe" style="background:#2d9d78;"></div>
-          <div class="sum-day-body">
-            <div class="sum-day-top">
-              <div class="sum-day-badge" style="background:#d1fae5;color:#065f46;">DAY 2</div>
-              <div class="sum-day-date">6월 12일 금요일</div>
-              <div class="sum-day-emoji">🏊</div>
-            </div>
+          <div class="sum-day-left" style="background:linear-gradient(160deg,#065f46,#059669);">
+            <div class="sum-day-lbl">DAY</div>
+            <div class="sum-day-num">2</div>
+            <div class="sum-day-ico">🏊</div>
+          </div>
+          <div class="sum-day-right">
+            <div class="sum-day-date-line">6월 12일 금요일</div>
             <div class="sum-day-title">샹그릴라 리조트 풀데이</div>
             <div class="sum-day-items">
               <div class="sum-day-item"><div class="sum-dt">08:30</div><div class="sum-dd">조식 – Café TATU</div></div>
               <div class="sum-day-item"><div class="sum-dt">10:30</div><div class="sum-dd">수영장 물놀이 &amp; 리조트 탐방 🌊</div></div>
               <div class="sum-day-item"><div class="sum-dt">17:30</div><div class="sum-dd">코코조스바 선셋 &amp; 라이브 공연 🌅</div></div>
-              <div class="sum-day-item"><div class="sum-dt">20:30</div><div class="sum-dd">Chi Spa 마사지 💆</div></div>
             </div>
-            <div class="sum-day-footer">자세히 보기 ›</div>
+            <div class="sum-day-goto">자세히 보기 ›</div>
           </div>
         </div>
 
         <!-- DAY 3 -->
         <div class="sum-day-card" onclick="goTo(3)">
-          <div class="sum-day-stripe" style="background:#f77f00;"></div>
-          <div class="sum-day-body">
-            <div class="sum-day-top">
-              <div class="sum-day-badge" style="background:#fff0d9;color:#9a3412;">DAY 3</div>
-              <div class="sum-day-date">6월 13일 토요일</div>
-              <div class="sum-day-emoji">🐠</div>
-            </div>
+          <div class="sum-day-left" style="background:linear-gradient(160deg,#92400e,#d97706);">
+            <div class="sum-day-lbl">DAY</div>
+            <div class="sum-day-num">3</div>
+            <div class="sum-day-ico">🐠</div>
+          </div>
+          <div class="sum-day-right">
+            <div class="sum-day-date-line">6월 13일 토요일</div>
             <div class="sum-day-title">사피섬 투어 &amp; 시내 탐방</div>
             <div class="sum-day-items">
               <div class="sum-day-item"><div class="sum-dt">11:00</div><div class="sum-dd">스타마리나 → 사피섬 스노클링 🤿</div></div>
               <div class="sum-day-item"><div class="sum-dt">15:00</div><div class="sum-dd">유잇청 사테 &amp; 쌀국수 맛집 🍢</div></div>
-              <div class="sum-day-item"><div class="sum-dt">16:00</div><div class="sum-dd">이마고몰 쇼핑 &amp; 커피 ☕</div></div>
-              <div class="sum-day-item"><div class="sum-dt">18:30</div><div class="sum-dd">리조트 해산물 디너 뷔페 🦐 (25% 쿠폰)</div></div>
+              <div class="sum-day-item"><div class="sum-dt">18:30</div><div class="sum-dd">리조트 해산물 디너 뷔페 🦐</div></div>
             </div>
-            <div class="sum-day-footer">자세히 보기 ›</div>
+            <div class="sum-day-goto">자세히 보기 ›</div>
           </div>
         </div>
 
         <!-- DAY 4 -->
         <div class="sum-day-card" onclick="goTo(4)">
-          <div class="sum-day-stripe" style="background:#7c3aed;"></div>
-          <div class="sum-day-body">
-            <div class="sum-day-top">
-              <div class="sum-day-badge" style="background:#ede9fe;color:#5b21b6;">DAY 4</div>
-              <div class="sum-day-date">6월 14일 일요일</div>
-              <div class="sum-day-emoji">✨</div>
-            </div>
+          <div class="sum-day-left" style="background:linear-gradient(160deg,#4c1d95,#7c3aed);">
+            <div class="sum-day-lbl">DAY</div>
+            <div class="sum-day-num">4</div>
+            <div class="sum-day-ico">✨</div>
+          </div>
+          <div class="sum-day-right">
+            <div class="sum-day-date-line">6월 14일 일요일</div>
             <div class="sum-day-title">도심투어 &amp; 반딧불 체험</div>
             <div class="sum-day-items">
               <div class="sum-day-item"><div class="sum-dt">13:30</div><div class="sum-dd">블루·핑크모스크 도심투어 🕌</div></div>
-              <div class="sum-day-item"><div class="sum-dt">16:45</div><div class="sum-dd">맹그로브 투어 &amp; 원숭이 만나기 🐒</div></div>
-              <div class="sum-day-item"><div class="sum-dt">17:50</div><div class="sum-dd">석양 감상 &amp; 반딧불 체험 🌟</div></div>
-              <div class="sum-day-item"><div class="sum-dt">22:00</div><div class="sum-dd">코타키나발루 국제공항 이동</div></div>
+              <div class="sum-day-item"><div class="sum-dt">16:45</div><div class="sum-dd">맹그로브 투어 &amp; 석양 감상 🌅</div></div>
+              <div class="sum-day-item"><div class="sum-dt">17:50</div><div class="sum-dd">반딧불 체험 🌟</div></div>
             </div>
-            <div class="sum-day-footer">자세히 보기 ›</div>
+            <div class="sum-day-goto">자세히 보기 ›</div>
           </div>
         </div>
 
         <!-- DAY 5 -->
         <div class="sum-day-card" onclick="goTo(5)">
-          <div class="sum-day-stripe" style="background:#0096c7;"></div>
-          <div class="sum-day-body">
-            <div class="sum-day-top">
-              <div class="sum-day-badge" style="background:#caf0f8;color:#023e8a;">DAY 5</div>
-              <div class="sum-day-date">6월 15일 월요일</div>
-              <div class="sum-day-emoji">🏠</div>
-            </div>
+          <div class="sum-day-left" style="background:linear-gradient(160deg,#0c4a6e,#0284c7);">
+            <div class="sum-day-lbl">DAY</div>
+            <div class="sum-day-num">5</div>
+            <div class="sum-day-ico">🏠</div>
+          </div>
+          <div class="sum-day-right">
+            <div class="sum-day-date-line">6월 15일 월요일</div>
             <div class="sum-day-title">귀국 – 코타키나발루 → 인천</div>
             <div class="sum-day-items">
-              <div class="sum-day-item"><div class="sum-dt">00:30</div><div class="sum-dd">제주항공 7C2604 새벽 출발 · 좌석 17A·B·C·D</div></div>
+              <div class="sum-day-item"><div class="sum-dt">00:30</div><div class="sum-dd">제주항공 7C2604 새벽 출발</div></div>
               <div class="sum-day-item"><div class="sum-dt">06:50</div><div class="sum-dd">인천공항 T1 도착 🛬</div></div>
-              <div class="sum-day-item"><div class="sum-dt">09:00</div><div class="sum-dd">공항 밴 탑승 🚐 (신랑 예약 필요)</div></div>
               <div class="sum-day-item"><div class="sum-dt">10:30</div><div class="sum-dd">집 도착 🎉</div></div>
             </div>
-            <div class="sum-day-footer">자세히 보기 ›</div>
+            <div class="sum-day-goto">자세히 보기 ›</div>
           </div>
         </div>
 
@@ -1726,16 +1826,17 @@
   let current = 0;
   let startX = 0;
   let startY = 0;
-  let isDragging = false;
+  let isDragging = false;   // 가로 스와이프 확정 여부
+  let isHorizontal = null;  // null=미결정, true=가로, false=세로
   let dragDist = 0;
 
   const track = document.getElementById('slidesTrack');
-  const tabs = document.querySelectorAll('.tab');
-  const dots = document.querySelectorAll('.dot-item');
-  const tabBar = document.getElementById('dayTabs');
+  const tabs  = document.querySelectorAll('.tab');
+  const dots  = document.querySelectorAll('.dot-item');
 
   function goTo(idx) {
     if (idx < 0 || idx >= TOTAL) return;
+    const prev = current;
     current = idx;
     track.style.transform = `translateX(-${current * 100}vw)`;
     tabs.forEach((t, i) => t.classList.toggle('active', i === current));
@@ -1743,45 +1844,71 @@
       d.classList.toggle('active', i === current);
       d.style.width = i === current ? '22px' : '7px';
     });
-    // scroll tab into view
     tabs[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    // reset scroll position of slide
-    document.getElementById('slide' + current).scrollTop = 0;
+    // 다른 슬라이드로 이동할 때만 스크롤 위치 초기화
+    if (prev !== current) {
+      document.getElementById('slide' + current).scrollTop = 0;
+    }
   }
 
-  // Touch / swipe
   const outer = document.getElementById('slidesOuter');
 
   outer.addEventListener('touchstart', e => {
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
-    isDragging = true;
-    dragDist = 0;
-    track.style.transition = 'none';
+    isDragging   = false;
+    isHorizontal = null;   // 방향 미결정
+    dragDist     = 0;
+    // transition은 여기서 끄지 않음 — 세로 스크롤이면 건드릴 필요 없음
   }, { passive: true });
 
   outer.addEventListener('touchmove', e => {
-    if (!isDragging) return;
     const dx = e.touches[0].clientX - startX;
     const dy = e.touches[0].clientY - startY;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
-      dragDist = dx;
+
+    // 처음 8px 이상 움직였을 때 방향 결정 (한 번만)
+    if (isHorizontal === null) {
+      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+      isHorizontal = Math.abs(dx) > Math.abs(dy);
+      if (isHorizontal) {
+        track.style.transition = 'none'; // 가로 확정 시에만 transition 끄기
+      }
+      return;
+    }
+
+    if (isHorizontal) {
+      isDragging = true;
+      dragDist   = dx;
       track.style.transform = `translateX(calc(-${current * 100}vw + ${dx}px))`;
     }
+    // 세로 스크롤이면 아무것도 하지 않음 → 브라우저 기본 스크롤 동작
   }, { passive: true });
 
   outer.addEventListener('touchend', () => {
-    isDragging = false;
     track.style.transition = 'transform 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-    if (dragDist < -50 && current < TOTAL - 1) goTo(current + 1);
-    else if (dragDist > 50 && current > 0) goTo(current - 1);
-    else goTo(current);
+
+    if (!isDragging) {
+      // 세로 스크롤이었거나 거의 움직이지 않은 경우 → 아무것도 하지 않음
+      isHorizontal = null;
+      return;
+    }
+
+    isDragging   = false;
+    isHorizontal = null;
+
+    if (dragDist < -50 && current < TOTAL - 1) {
+      goTo(current + 1);
+    } else if (dragDist > 50 && current > 0) {
+      goTo(current - 1);
+    } else {
+      // 스와이프가 짧으면 현재 슬라이드로 snap-back (scrollTop 리셋 없음)
+      track.style.transform = `translateX(-${current * 100}vw)`;
+    }
   });
 
-  // Keyboard nav (desktop)
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight') goTo(current + 1);
-    if (e.key === 'ArrowLeft') goTo(current - 1);
+    if (e.key === 'ArrowLeft')  goTo(current - 1);
   });
 </script>
 </body>
