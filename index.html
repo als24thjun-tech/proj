@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>재인재우네 코타키나발루 여행 🌊</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ocean: #0077b6;
+      --deep: #023e8a;
+      --sky: #0096c7;
+      --light: #90e0ef;
+      --pale: #caf0f8;
+      --bg: #f0f9ff;
+      --accent: #f77f00;
+      --green: #2d9d78;
+      --purple: #7c3aed;
+      --amber: #d97706;
+      --red: #dc2626;
+      --white: #ffffff;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --text: #1e293b;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    /* ===== HEADER ===== */
+    .app-header {
+      background: linear-gradient(135deg, var(--deep) 0%, var(--ocean) 100%);
+      color: white;
+      padding: 10px 16px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 20;
+    }
+    .header-left .trip-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+    .header-left .trip-meta {
+      font-size: 0.68rem;
+      opacity: 0.8;
+      margin-top: 1px;
+    }
+    .header-right {
+      text-align: right;
+      font-size: 0.68rem;
+      opacity: 0.8;
+      line-height: 1.5;
+    }
+    .header-right .hotel-name {
+      font-weight: 700;
+      font-size: 0.72rem;
+      opacity: 1;
+      color: var(--light);
+    }
+
+    /* ===== DAY TABS ===== */
+    .day-tabs {
+      display: flex;
+      background: var(--deep);
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .day-tabs::-webkit-scrollbar { display: none; }
+
+    .tab {
+      flex-shrink: 0;
+      padding: 7px 14px 8px;
+      color: rgba(255,255,255,0.55);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .tab.active {
+      color: var(--light);
+      border-bottom-color: var(--light);
+    }
+    .tab-sub {
+      font-size: 0.6rem;
+      font-weight: 400;
+      display: block;
+      opacity: 0.75;
+      margin-top: 1px;
+    }
+
+    /* ===== SLIDES ===== */
+    .slides-outer {
+      height: calc(100dvh - 82px);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .slides-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+    }
+
+    .slide {
+      flex-shrink: 0;
+      width: 100vw;
+      height: 100%;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 60px;
+    }
+
+    /* ===== SLIDE DAY HEADER ===== */
+    .slide-header {
+      background: linear-gradient(135deg, var(--sky) 0%, var(--ocean) 100%);
+      color: white;
+      padding: 14px 16px 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .slide-header .day-label {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      opacity: 0.8;
+    }
+    .slide-header .day-title {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+    .slide-header .day-theme {
+      font-size: 0.76rem;
+      opacity: 0.9;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    /* ===== SCHEDULE ===== */
+    .schedule {
+      padding: 14px 14px 10px;
+    }
+
+    .sched-item {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .sched-time {
+      flex-shrink: 0;
+      width: 48px;
+      text-align: right;
+      padding-top: 11px;
+    }
+    .sched-time span {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--ocean);
+      line-height: 1.2;
+    }
+
+    .sched-line {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 11px;
+    }
+    .sched-dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--ocean);
+      flex-shrink: 0;
+      border: 2px solid white;
+      box-shadow: 0 0 0 2px var(--ocean);
+    }
+    .sched-line-bar {
+      flex: 1;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--pale), #dde9f5);
+      margin-top: 4px;
+      min-height: 24px;
+    }
+
+    .sched-card {
+      flex: 1;
+      background: var(--white);
+      border-radius: 12px;
+      padding: 11px 13px;
+      box-shadow: 0 2px 10px rgba(0,100,200,0.07);
+      border-left: 4px solid var(--ocean);
+      min-width: 0;
+    }
+    .sched-card.flight    { border-left-color: var(--accent); }
+    .sched-card.meal      { border-left-color: var(--green); }
+    .sched-card.hotel     { border-left-color: var(--purple); }
+    .sched-card.activity  { border-left-color: var(--sky); }
+    .sched-card.transport { border-left-color: #94a3b8; }
+    .sched-card.tip       { border-left-color: var(--amber); background: #fffbeb; }
+    .sched-card.optional  { border-left-color: #94a3b8; background: #f8fafc; }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .card-icon { font-size: 1rem; line-height: 1; }
+    .card-title {
+      font-size: 0.87rem;
+      font-weight: 700;
+      flex: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 20px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .badge-orange  { background: #fed7aa; color: #9a3412; }
+    .badge-green   { background: #bbf7d0; color: #14532d; }
+    .badge-blue    { background: #bfdbfe; color: #1e3a8a; }
+    .badge-purple  { background: #e9d5ff; color: #581c87; }
+    .badge-red     { background: #fecaca; color: #7f1d1d; }
+    .badge-amber   { background: #fde68a; color: #78350f; }
+    .badge-gray    { background: #e2e8f0; color: #475569; }
+
+    .card-detail {
+      margin-top: 7px;
+      font-size: 0.76rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .card-detail .bullet {
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+      margin-bottom: 2px;
+    }
+    .card-detail .bullet::before {
+      content: '·';
+      flex-shrink: 0;
+      color: var(--ocean);
+      font-weight: 900;
+      margin-top: 0;
+    }
+
+    .money-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: 8px;
+      padding: 7px 10px;
+      margin-top: 8px;
+      font-size: 0.74rem;
+      color: #15803d;
+      line-height: 1.5;
+    }
+    .money-box-icon { flex-shrink: 0; }
+
+    /* ===== FLIGHT SEAT ===== */
+    .seat-box {
+      background: linear-gradient(135deg, #fff8f0, #fff);
+      border: 1px solid #fed7aa;
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+    .seat-flight-info {
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+    .seat-plane-body {
+      background: white;
+      border-radius: 8px;
+      padding: 8px 6px;
+      border: 1px solid #e5e7eb;
+    }
+    .seat-col-labels {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      margin-bottom: 4px;
+    }
+    .seat-col-label {
+      width: 30px;
+      text-align: center;
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+    .seat-col-aisle { width: 18px; }
+    .seat-row-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      margin: 3px 0;
+    }
+    .row-num {
+      width: 18px;
+      text-align: right;
+      font-size: 0.6rem;
+      color: #cbd5e1;
+      margin-right: 2px;
+    }
+    .seat-cell {
+      width: 30px;
+      height: 26px;
+      border-radius: 5px 5px 4px 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.58rem;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .seat-empty   { background: #f1f5f9; color: #94a3b8; border: 1px solid #e2e8f0; }
+    .seat-taken   { background: var(--ocean); color: white; box-shadow: 0 2px 6px rgba(0,119,182,0.4); }
+    .seat-aisle   { width: 18px; background: transparent; }
+    .seat-legend  {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 10px;
+      font-size: 0.64rem;
+      color: var(--muted);
+      align-items: center;
+    }
+    .legend-swatch {
+      width: 14px;
+      height: 12px;
+      border-radius: 3px;
+      display: inline-block;
+    }
+    .legend-item { display: flex; align-items: center; gap: 4px; }
+
+    /* ===== MISC PAGE ===== */
+    .misc-header {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      padding: 14px 16px 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .misc-header .day-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 2.5px; opacity: 0.8; }
+    .misc-header .day-title { font-size: 1rem; font-weight: 800; margin-top: 2px; }
+    .misc-header .day-theme { font-size: 0.76rem; opacity: 0.9; margin-top: 4px; }
+
+    .misc-body { padding: 14px; }
+    .misc-section {
+      background: white;
+      border-radius: 12px;
+      padding: 13px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+    .misc-section-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--ocean);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      padding: 7px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 0.79rem;
+      line-height: 1.5;
+    }
+    .check-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .check-num {
+      width: 22px;
+      height: 22px;
+      background: var(--ocean);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.62rem;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .check-star {
+      width: 22px;
+      height: 22px;
+      background: var(--amber);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .check-done {
+      background: var(--green);
+    }
+    .gift-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 0.77rem;
+      line-height: 1.5;
+      padding: 4px 0;
+    }
+
+    .rate-box {
+      background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+      border: 1px solid #6ee7b7;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+    .rate-big { font-size: 1.4rem; font-weight: 800; color: var(--green); }
+    .rate-sub { font-size: 0.72rem; color: #047857; margin-top: 2px; }
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-dots {
+      position: fixed;
+      bottom: 14px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      z-index: 100;
+      pointer-events: none;
+    }
+    .dot-item {
+      height: 7px;
+      border-radius: 4px;
+      background: rgba(0,119,182,0.25);
+      transition: all 0.25s;
+      pointer-events: all;
+      cursor: pointer;
+    }
+    .dot-item.active {
+      background: var(--ocean);
+      width: 22px !important;
+    }
+
+    /* ===== SWIPE NAV ARROWS ===== */
+    .slide-hint {
+      position: fixed;
+      bottom: 30px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.65rem;
+      color: rgba(0,119,182,0.45);
+      pointer-events: none;
+      z-index: 99;
+      letter-spacing: 1px;
+    }
+
+    /* ===== SUMMARY SLIDE ===== */
+    .sum-header {
+      background: linear-gradient(135deg, var(--deep) 0%, var(--ocean) 100%);
+      color: white;
+      padding: 14px 16px 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .sum-header .day-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 2.5px; opacity: 0.8; }
+    .sum-header .day-title { font-size: 1rem; font-weight: 800; margin-top: 2px; }
+    .sum-header .day-theme { font-size: 0.76rem; opacity: 0.9; margin-top: 4px; line-height: 1.4; }
+
+    .sum-body { padding: 14px 14px 70px; }
+
+    /* flight strip */
+    .sum-flight-strip {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(0,100,200,0.08);
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      border: 1px solid #dbeafe;
+    }
+    .sum-flight-strip-label {
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ocean);
+      margin-bottom: 10px;
+    }
+    .sum-fl-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 0;
+    }
+    .sum-fl-row + .sum-fl-row {
+      border-top: 1px dashed #e2e8f0;
+    }
+    .sum-fl-apt {
+      flex: 1;
+      text-align: center;
+    }
+    .sum-fl-code { font-size: 1.3rem; font-weight: 900; color: var(--deep); letter-spacing: 1px; }
+    .sum-fl-city { font-size: 0.62rem; color: var(--muted); margin-top: 1px; }
+    .sum-fl-time { font-size: 0.82rem; font-weight: 700; color: var(--text); margin-top: 2px; }
+    .sum-fl-mid { flex: 1; text-align: center; }
+    .sum-fl-arr { display: flex; align-items: center; gap: 3px; justify-content: center; }
+    .sum-fl-line { flex: 1; height: 1px; background: #bfdbfe; max-width: 30px; }
+    .sum-fl-icon { font-size: 0.9rem; }
+    .sum-fl-dur  { font-size: 0.62rem; color: var(--muted); margin-top: 3px; }
+    .sum-fl-num  { font-size: 0.62rem; color: var(--ocean); font-weight: 700; margin-top: 2px; }
+    .sum-fl-dir  {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      width: 28px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .sum-fl-dir.go  { color: white; background: var(--ocean); border-radius: 4px; padding: 2px 4px; }
+    .sum-fl-dir.ret { color: white; background: var(--accent); border-radius: 4px; padding: 2px 4px; }
+
+    /* meta row */
+    .sum-meta-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .sum-meta-card {
+      flex: 1;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,100,200,0.07);
+      padding: 11px 12px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid #e2e8f0;
+    }
+    .sum-meta-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .sum-meta-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+    .sum-meta-val   { font-size: 0.78rem; font-weight: 700; color: var(--text); margin-top: 2px; line-height: 1.35; }
+
+    /* day summary cards */
+    .sum-day-card {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(0,100,200,0.07);
+      margin-bottom: 10px;
+      overflow: hidden;
+      display: flex;
+      cursor: pointer;
+      transition: transform 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sum-day-card:active { transform: scale(0.985); }
+    .sum-day-stripe { width: 5px; flex-shrink: 0; }
+    .sum-day-body   { flex: 1; padding: 12px 13px; }
+
+    .sum-day-top {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 6px;
+    }
+    .sum-day-badge {
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+    .sum-day-date  { font-size: 0.72rem; color: var(--muted); }
+    .sum-day-emoji { font-size: 1.15rem; margin-left: auto; }
+
+    .sum-day-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .sum-day-items { display: flex; flex-direction: column; gap: 3px; }
+    .sum-day-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 0.73rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .sum-dt {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--ocean);
+      min-width: 36px;
+      flex-shrink: 0;
+      padding-top: 1px;
+    }
+    .sum-dd::before { content: '·'; font-weight: 900; color: var(--ocean); margin-right: 3px; }
+    .sum-dd { color: #374151; font-size: 0.73rem; }
+
+    .sum-day-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 7px;
+      font-size: 0.65rem;
+      color: var(--ocean);
+      opacity: 0.6;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (min-width: 480px) {
+      .sched-card { padding: 12px 15px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="app-header">
+  <div class="header-left">
+    <div class="trip-name">✈️ 재인재우네 코타키나발루</div>
+    <div class="trip-meta">🗓 2026.06.11(목) – 06.15(월) &nbsp;|&nbsp; 👨‍👩‍👧‍👦 4인 가족</div>
+  </div>
+  <div class="header-right">
+    <div class="hotel-name">🏨 샹그릴라 탄중아루</div>
+    <div>말레이시아 코타키나발루</div>
+  </div>
+</div>
+
+<!-- DAY TABS -->
+<div class="day-tabs" id="dayTabs">
+  <div class="tab active" onclick="goTo(0)">📋 요약<span class="tab-sub">전체일정</span></div>
+  <div class="tab" onclick="goTo(1)">DAY 1<span class="tab-sub">6/11 목</span></div>
+  <div class="tab" onclick="goTo(2)">DAY 2<span class="tab-sub">6/12 금</span></div>
+  <div class="tab" onclick="goTo(3)">DAY 3<span class="tab-sub">6/13 토</span></div>
+  <div class="tab" onclick="goTo(4)">DAY 4<span class="tab-sub">6/14 일</span></div>
+  <div class="tab" onclick="goTo(5)">DAY 5<span class="tab-sub">6/15 월</span></div>
+  <div class="tab" onclick="goTo(6)">기타<span class="tab-sub">참고사항</span></div>
+</div>
+
+<!-- SLIDES -->
+<div class="slides-outer" id="slidesOuter">
+  <div class="slides-track" id="slidesTrack">
+
+    <!-- ========== 요약 ========== -->
+    <div class="slide" id="slide0">
+      <div class="sum-header">
+        <div class="day-label">OVERVIEW · 전체 일정 한눈에 보기</div>
+        <div class="day-title">📋 4박 5일 코타키나발루 여행</div>
+        <div class="day-theme">2026.06.11(목) — 06.15(월) &nbsp;·&nbsp; 재인재우네 가족 4인</div>
+      </div>
+
+      <div class="sum-body">
+
+        <!-- 항공편 -->
+        <div class="sum-flight-strip">
+          <div class="sum-flight-strip-label">✈ 항공편 정보</div>
+          <!-- 가는 편 -->
+          <div class="sum-fl-row">
+            <div class="sum-fl-dir go">GO</div>
+            <div class="sum-fl-apt">
+              <div class="sum-fl-code">ICN</div>
+              <div class="sum-fl-city">인천</div>
+              <div class="sum-fl-time">19:10</div>
+            </div>
+            <div class="sum-fl-mid">
+              <div class="sum-fl-arr">
+                <div class="sum-fl-line"></div>
+                <div class="sum-fl-icon">✈️</div>
+                <div class="sum-fl-line"></div>
+              </div>
+              <div class="sum-fl-dur">5시간 20분</div>
+              <div class="sum-fl-num">7C2603 · 6/11(목)</div>
+            </div>
+            <div class="sum-fl-apt">
+              <div class="sum-fl-code">BKI</div>
+              <div class="sum-fl-city">코타키나발루</div>
+              <div class="sum-fl-time">23:30</div>
+            </div>
+          </div>
+          <!-- 오는 편 -->
+          <div class="sum-fl-row">
+            <div class="sum-fl-dir ret">RET</div>
+            <div class="sum-fl-apt">
+              <div class="sum-fl-code">BKI</div>
+              <div class="sum-fl-city">코타키나발루</div>
+              <div class="sum-fl-time">00:30</div>
+            </div>
+            <div class="sum-fl-mid">
+              <div class="sum-fl-arr">
+                <div class="sum-fl-line"></div>
+                <div class="sum-fl-icon">✈️</div>
+                <div class="sum-fl-line"></div>
+              </div>
+              <div class="sum-fl-dur">5시간 20분</div>
+              <div class="sum-fl-num">7C2604 · 6/15(월)</div>
+            </div>
+            <div class="sum-fl-apt">
+              <div class="sum-fl-code">ICN</div>
+              <div class="sum-fl-city">인천</div>
+              <div class="sum-fl-time">06:50</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 숙소 & 좌석 -->
+        <div class="sum-meta-row">
+          <div class="sum-meta-card">
+            <div class="sum-meta-icon">🏨</div>
+            <div>
+              <div class="sum-meta-label">숙소 (3박)</div>
+              <div class="sum-meta-val">샹그릴라 탄중아루</div>
+            </div>
+          </div>
+          <div class="sum-meta-card">
+            <div class="sum-meta-icon">🪑</div>
+            <div>
+              <div class="sum-meta-label">비행기 좌석</div>
+              <div class="sum-meta-val">17A · 17B · 17C · 17D</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAY 1 -->
+        <div class="sum-day-card" onclick="goTo(1)">
+          <div class="sum-day-stripe" style="background:#1a5c8f;"></div>
+          <div class="sum-day-body">
+            <div class="sum-day-top">
+              <div class="sum-day-badge" style="background:#e8f0f8;color:#1a5c8f;">DAY 1</div>
+              <div class="sum-day-date">6월 11일 목요일</div>
+              <div class="sum-day-emoji">✈️</div>
+            </div>
+            <div class="sum-day-title">출발 → 코타키나발루 도착</div>
+            <div class="sum-day-items">
+              <div class="sum-day-item"><div class="sum-dt">13:00</div><div class="sum-dd">집 → 인천공항 T1 리무진 출발</div></div>
+              <div class="sum-day-item"><div class="sum-dt">19:10</div><div class="sum-dd">제주항공 7C2603 탑승 · 좌석 17A·B·C·D</div></div>
+              <div class="sum-day-item"><div class="sum-dt">23:30</div><div class="sum-dd">코타키나발루 국제공항 도착</div></div>
+              <div class="sum-day-item"><div class="sum-dt">심야</div><div class="sum-dd">샹그릴라 탄중아루 체크인 🏨</div></div>
+            </div>
+            <div class="sum-day-footer">자세히 보기 ›</div>
+          </div>
+        </div>
+
+        <!-- DAY 2 -->
+        <div class="sum-day-card" onclick="goTo(2)">
+          <div class="sum-day-stripe" style="background:#2d9d78;"></div>
+          <div class="sum-day-body">
+            <div class="sum-day-top">
+              <div class="sum-day-badge" style="background:#d1fae5;color:#065f46;">DAY 2</div>
+              <div class="sum-day-date">6월 12일 금요일</div>
+              <div class="sum-day-emoji">🏊</div>
+            </div>
+            <div class="sum-day-title">샹그릴라 리조트 풀데이</div>
+            <div class="sum-day-items">
+              <div class="sum-day-item"><div class="sum-dt">08:30</div><div class="sum-dd">조식 – Café TATU</div></div>
+              <div class="sum-day-item"><div class="sum-dt">10:30</div><div class="sum-dd">수영장 물놀이 &amp; 리조트 탐방 🌊</div></div>
+              <div class="sum-day-item"><div class="sum-dt">17:30</div><div class="sum-dd">코코조스바 선셋 &amp; 라이브 공연 🌅</div></div>
+              <div class="sum-day-item"><div class="sum-dt">20:30</div><div class="sum-dd">Chi Spa 마사지 💆</div></div>
+            </div>
+            <div class="sum-day-footer">자세히 보기 ›</div>
+          </div>
+        </div>
+
+        <!-- DAY 3 -->
+        <div class="sum-day-card" onclick="goTo(3)">
+          <div class="sum-day-stripe" style="background:#f77f00;"></div>
+          <div class="sum-day-body">
+            <div class="sum-day-top">
+              <div class="sum-day-badge" style="background:#fff0d9;color:#9a3412;">DAY 3</div>
+              <div class="sum-day-date">6월 13일 토요일</div>
+              <div class="sum-day-emoji">🐠</div>
+            </div>
+            <div class="sum-day-title">사피섬 투어 &amp; 시내 탐방</div>
+            <div class="sum-day-items">
+              <div class="sum-day-item"><div class="sum-dt">11:00</div><div class="sum-dd">스타마리나 → 사피섬 스노클링 🤿</div></div>
+              <div class="sum-day-item"><div class="sum-dt">15:00</div><div class="sum-dd">유잇청 사테 &amp; 쌀국수 맛집 🍢</div></div>
+              <div class="sum-day-item"><div class="sum-dt">16:00</div><div class="sum-dd">이마고몰 쇼핑 &amp; 커피 ☕</div></div>
+              <div class="sum-day-item"><div class="sum-dt">18:30</div><div class="sum-dd">리조트 해산물 디너 뷔페 🦐 (25% 쿠폰)</div></div>
+            </div>
+            <div class="sum-day-footer">자세히 보기 ›</div>
+          </div>
+        </div>
+
+        <!-- DAY 4 -->
+        <div class="sum-day-card" onclick="goTo(4)">
+          <div class="sum-day-stripe" style="background:#7c3aed;"></div>
+          <div class="sum-day-body">
+            <div class="sum-day-top">
+              <div class="sum-day-badge" style="background:#ede9fe;color:#5b21b6;">DAY 4</div>
+              <div class="sum-day-date">6월 14일 일요일</div>
+              <div class="sum-day-emoji">✨</div>
+            </div>
+            <div class="sum-day-title">도심투어 &amp; 반딧불 체험</div>
+            <div class="sum-day-items">
+              <div class="sum-day-item"><div class="sum-dt">13:30</div><div class="sum-dd">블루·핑크모스크 도심투어 🕌</div></div>
+              <div class="sum-day-item"><div class="sum-dt">16:45</div><div class="sum-dd">맹그로브 투어 &amp; 원숭이 만나기 🐒</div></div>
+              <div class="sum-day-item"><div class="sum-dt">17:50</div><div class="sum-dd">석양 감상 &amp; 반딧불 체험 🌟</div></div>
+              <div class="sum-day-item"><div class="sum-dt">22:00</div><div class="sum-dd">코타키나발루 국제공항 이동</div></div>
+            </div>
+            <div class="sum-day-footer">자세히 보기 ›</div>
+          </div>
+        </div>
+
+        <!-- DAY 5 -->
+        <div class="sum-day-card" onclick="goTo(5)">
+          <div class="sum-day-stripe" style="background:#0096c7;"></div>
+          <div class="sum-day-body">
+            <div class="sum-day-top">
+              <div class="sum-day-badge" style="background:#caf0f8;color:#023e8a;">DAY 5</div>
+              <div class="sum-day-date">6월 15일 월요일</div>
+              <div class="sum-day-emoji">🏠</div>
+            </div>
+            <div class="sum-day-title">귀국 – 코타키나발루 → 인천</div>
+            <div class="sum-day-items">
+              <div class="sum-day-item"><div class="sum-dt">00:30</div><div class="sum-dd">제주항공 7C2604 새벽 출발 · 좌석 17A·B·C·D</div></div>
+              <div class="sum-day-item"><div class="sum-dt">06:50</div><div class="sum-dd">인천공항 T1 도착 🛬</div></div>
+              <div class="sum-day-item"><div class="sum-dt">09:00</div><div class="sum-dd">공항 밴 탑승 🚐 (신랑 예약 필요)</div></div>
+              <div class="sum-day-item"><div class="sum-dt">10:30</div><div class="sum-dd">집 도착 🎉</div></div>
+            </div>
+            <div class="sum-day-footer">자세히 보기 ›</div>
+          </div>
+        </div>
+
+      </div><!-- /sum-body -->
+    </div><!-- /slide0 summary -->
+
+    <!-- ========== DAY 1 ========== -->
+    <div class="slide" id="slide1">
+      <div class="slide-header">
+        <div class="day-label">DAY 1 &middot; June 11, Thursday</div>
+        <div class="day-title">✈️ 출발 &rarr; 코타키나발루 도착</div>
+        <div class="day-theme">인천공항 출발 &rarr; 제주항공 &rarr; 샹그릴라 체크인</div>
+      </div>
+
+      <div class="schedule">
+
+        <!-- 13:00 리무진 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>13:00</span></div>
+          <div class="sched-line"><div class="sched-dot"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card transport">
+            <div class="card-head">
+              <span class="card-icon">🚌</span>
+              <span class="card-title">집 → 인천공항 출발</span>
+              <span class="badge badge-gray">약 90분</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">현대홈타운 평일 인천공항T1 리무진 8852 온라인 예매</div>
+              <div class="bullet">13시 51분 or 14시 11분 리무진<br>→ 도착 15시 06분 or 15시 26분</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 15:30 인천공항 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>15:30</span></div>
+          <div class="sched-line"><div class="sched-dot"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card">
+            <div class="card-head">
+              <span class="card-icon">🛫</span>
+              <span class="card-title">인천공항 T1 도착 &amp; 탑승 준비</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">환전 찾기 &amp; 로밍 차단 (이심 미리 사기)</div>
+              <div class="bullet">체크인 및 수하물 부치기</div>
+              <div class="bullet">패스트트랙 이용 <strong>(만 7세 미만 이용 가능)</strong></div>
+              <div class="bullet">키즈존 – 3층 면세지역<br>246 / 254 / 242 / 257 / 268 / 231 게이트 근처</div>
+              <div class="bullet">면세품 찾기</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 17:00 저녁 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>17:00</span></div>
+          <div class="sched-line"><div class="sched-dot"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card meal">
+            <div class="card-head">
+              <span class="card-icon">🍽️</span>
+              <span class="card-title">이른 저녁 식사 &amp; 커피타임</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">이른 저녁 식사 또는 키즈존에서 아이들 놀리기</div>
+              <div class="bullet">편의점 들러 기내 간식거리 구입</div>
+              <div class="bullet" style="color:#dc2626; font-weight:600;">🍬 귀 아플 때 대비 사탕 준비!</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 18:30 게이트 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>18:30</span></div>
+          <div class="sched-line"><div class="sched-dot"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card transport">
+            <div class="card-head">
+              <span class="card-icon">🚇</span>
+              <span class="card-title">셔틀 트레인 이동 &amp; 게이트 앞 대기</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 19:10 비행기 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>19:10</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--accent); box-shadow:0 0 0 2px var(--accent);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card flight">
+            <div class="card-head">
+              <span class="card-icon">✈️</span>
+              <span class="card-title">제주항공 7C2603 탑승</span>
+              <span class="badge badge-orange">비행 5시간 20분</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">인천(ICN) → 코타키나발루(BKI)</div>
+            </div>
+
+            <!-- 좌석 다이어그램 -->
+            <div class="seat-box">
+              <div class="seat-flight-info">🪑 좌석 배치 – Row 17</div>
+              <div class="seat-plane-body">
+                <div class="seat-col-labels">
+                  <div class="row-num"></div>
+                  <div class="seat-col-label">A</div>
+                  <div class="seat-col-label">B</div>
+                  <div class="seat-col-label">C</div>
+                  <div class="seat-col-aisle"></div>
+                  <div class="seat-col-label">D</div>
+                  <div class="seat-col-label">E</div>
+                  <div class="seat-col-label">F</div>
+                </div>
+                <!-- 16행 (앞) -->
+                <div class="seat-row-container">
+                  <div class="row-num">16</div>
+                  <div class="seat-cell seat-empty">16A</div>
+                  <div class="seat-cell seat-empty">16B</div>
+                  <div class="seat-cell seat-empty">16C</div>
+                  <div class="seat-aisle"></div>
+                  <div class="seat-cell seat-empty">16D</div>
+                  <div class="seat-cell seat-empty">16E</div>
+                  <div class="seat-cell seat-empty">16F</div>
+                </div>
+                <!-- 17행 (우리 가족) -->
+                <div class="seat-row-container">
+                  <div class="row-num" style="color:var(--accent);font-weight:800;">17</div>
+                  <div class="seat-cell seat-taken">재인</div>
+                  <div class="seat-cell seat-taken">재우</div>
+                  <div class="seat-cell seat-taken">엄마</div>
+                  <div class="seat-aisle"></div>
+                  <div class="seat-cell seat-taken">아빠</div>
+                  <div class="seat-cell seat-empty">17E</div>
+                  <div class="seat-cell seat-empty">17F</div>
+                </div>
+                <!-- 18행 (뒤) -->
+                <div class="seat-row-container">
+                  <div class="row-num">18</div>
+                  <div class="seat-cell seat-empty">18A</div>
+                  <div class="seat-cell seat-empty">18B</div>
+                  <div class="seat-cell seat-empty">18C</div>
+                  <div class="seat-aisle"></div>
+                  <div class="seat-cell seat-empty">18D</div>
+                  <div class="seat-cell seat-empty">18E</div>
+                  <div class="seat-cell seat-empty">18F</div>
+                </div>
+              </div>
+              <div class="seat-legend">
+                <div class="legend-item"><span class="legend-swatch" style="background:var(--ocean);"></span> 우리 가족 (17A·B·C·D)</div>
+                <div class="legend-item"><span class="legend-swatch" style="background:#f1f5f9;border:1px solid #e2e8f0;"></span> 비어있음</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 23:30 도착 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>23:30</span></div>
+          <div class="sched-line"><div class="sched-dot"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card">
+            <div class="card-head">
+              <span class="card-icon">🛬</span>
+              <span class="card-title">코타키나발루 국제공항 도착</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">입국 수속 및 짐 찾기</div>
+              <div class="bullet">하말 – 공항에서 호텔 픽업 요청 <span class="badge badge-green" style="margin-left:2px;">예약완료</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 체크인 -->
+        <div class="sched-item">
+          <div class="sched-time"><span></span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--purple); box-shadow:0 0 0 2px var(--purple);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card hotel">
+            <div class="card-head">
+              <span class="card-icon">🏨</span>
+              <span class="card-title">샹그릴라 탄중아루 체크인</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">1박당 관광세 10링깃 &rarr; 총 <strong>30링깃</strong> 현금 준비</div>
+            </div>
+            <div class="money-box">
+              <span class="money-box-icon">💰</span>
+              <span>관광세 30링깃 현금 필요</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /schedule -->
+    </div><!-- /slide0 -->
+
+
+    <!-- ========== DAY 2 ========== -->
+    <div class="slide" id="slide2">
+      <div class="slide-header">
+        <div class="day-label">DAY 2 &middot; June 12, Friday</div>
+        <div class="day-title">🏊 샹그릴라 탄중아루 리조트 풀데이</div>
+        <div class="day-theme">하루 종일 리조트 &middot; 저녁 선셋바 석양 감상 &middot; 마사지</div>
+      </div>
+
+      <div class="schedule">
+
+        <!-- 8:30 조식 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>08:30</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--green); box-shadow:0 0 0 2px var(--green);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card meal">
+            <div class="card-head">
+              <span class="card-icon">🍳</span>
+              <span class="card-title">조식 – Café TATU</span>
+              <span class="badge badge-green">약 1시간</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10:30 물놀이 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>10:30</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--sky); box-shadow:0 0 0 2px var(--sky);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card activity">
+            <div class="card-head">
+              <span class="card-icon">🌊</span>
+              <span class="card-title">리조트 둘러보기 &amp; 수영장 물놀이</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">🎈 물풍선 매일 2바구니 제공</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12:30 점심 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>12:30</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--green); box-shadow:0 0 0 2px var(--green);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card meal">
+            <div class="card-head">
+              <span class="card-icon">🥟</span>
+              <span class="card-title">점심</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet"><strong>샹팰리스</strong> (딤섬 맛집)</div>
+              <div class="bullet">or TATU 점심 뷔페</div>
+              <div class="bullet">썬베드에서 간단 주문도 가능</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 15:00 수영장 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>15:00</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--sky); box-shadow:0 0 0 2px var(--sky);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card activity">
+            <div class="card-head">
+              <span class="card-icon">🏊</span>
+              <span class="card-title">오후 수영장 물놀이</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">🍦 아이스크림바</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 17:00 환복 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>17:00</span></div>
+          <div class="sched-line"><div class="sched-dot"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card">
+            <div class="card-head">
+              <span class="card-icon">🚿</span>
+              <span class="card-title">씻고 환복</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 17:30 선셋바 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>17:30</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--accent); box-shadow:0 0 0 2px var(--accent);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card flight">
+            <div class="card-head">
+              <span class="card-icon">🌅</span>
+              <span class="card-title">저녁 – 코코조스바 (선셋 &amp; 라이브 공연)</span>
+              <span class="badge badge-orange">예약완료</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">⏰ 6시 전후로 일몰 – <strong>30분 일찍 도착 권장</strong></div>
+              <div class="bullet">비치테이블 예약 – 18:00 왓츠앱으로 예약 완료<br>(5시 30분 입장 추천)</div>
+              <div class="bullet">추천 메뉴: 햄버거 &middot; 피자 &middot; 파스타 &middot; 과일 플래터</div>
+              <div class="bullet">아이들 안 먹으면 숙소 컵반 활용</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 20:30 마사지 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>20:30</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--purple); box-shadow:0 0 0 2px var(--purple);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card hotel">
+            <div class="card-head">
+              <span class="card-icon">💆</span>
+              <span class="card-title">마사지 – Chi, The Spa</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">엄마 마사지 ⭐ 사전 예약 필수!</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 선택: 나이트마켓 -->
+        <div class="sched-item">
+          <div class="sched-time"><span></span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:#94a3b8; box-shadow:0 0 0 2px #94a3b8;"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card optional">
+            <div class="card-head">
+              <span class="card-icon">🌙</span>
+              <span class="card-title">나이트마켓 – 망고주스</span>
+              <span class="badge badge-gray">선택사항</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">피곤하면 일찍 쉬기 😴</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /slide1 -->
+
+
+    <!-- ========== DAY 3 ========== -->
+    <div class="slide" id="slide3">
+      <div class="slide-header">
+        <div class="day-label">DAY 3 &middot; June 13, Saturday</div>
+        <div class="day-title">🐠 사피섬 투어 &amp; 시내 탐방</div>
+        <div class="day-theme">스타마리나 → 사피섬 스노클링 → 유잇청(사테) → 이마고몰 → 해산물 뷔페</div>
+      </div>
+
+      <div class="schedule">
+
+        <!-- 8:30 조식 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>08:30</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--green); box-shadow:0 0 0 2px var(--green);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card meal">
+            <div class="card-head">
+              <span class="card-icon">🍳</span>
+              <span class="card-title">조식 – Café TATU</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">조식 후 날씨 상태 보고 스타마리나 여부 결정</div>
+              <div class="bullet">아이들에게도 물어보기 (바다 or 리조트 수영장)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11:00 사피섬 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>11:00</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--sky); box-shadow:0 0 0 2px var(--sky);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card activity">
+            <div class="card-head">
+              <span class="card-icon">🚢</span>
+              <span class="card-title">스타마리나 → 사피섬 투어</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet"><strong>배편:</strong> 매시간 출발 (10 / 11 / 12 / 13시)</div>
+              <div class="bullet"><strong>복귀:</strong> 매시간 10분 (12:10 / 13:10 / 14:10 / 15:10 / 16:10)</div>
+              <div class="bullet">챙길 것: 생수 &middot; 현금 &middot; 컵라면 &middot; 보냉가방 &middot; 간단한 간식</div>
+              <div class="bullet">사피카페 뜨거운 물 2링깃 (현금만) – 나무젓가락 챙기기</div>
+            </div>
+            <div class="money-box">
+              <span class="money-box-icon">💰</span>
+              <span>
+                사피섬 입도세: 성인 25링깃 / 아이 20링깃 &rarr; 총 <strong>90링깃</strong><br>
+                배편 요금: 성인 95링깃 / 아이 65링깃 &rarr; 총 <strong>320링깃</strong>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 14:00 복귀 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>14:00</span></div>
+          <div class="sched-line"><div class="sched-dot"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card transport">
+            <div class="card-head">
+              <span class="card-icon">🚖</span>
+              <span class="card-title">리조트 복귀 후 샤워 → 유잇청 이동</span>
+              <span class="badge badge-gray">그랩 25분</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">그랩 이용 – 트래블카드 결제</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 15:00 유잇청 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>15:00</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--green); box-shadow:0 0 0 2px var(--green);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card meal">
+            <div class="card-head">
+              <span class="card-icon">🍢</span>
+              <span class="card-title">유잇청 (사테 &amp; 쌀국수)</span>
+              <span class="badge badge-red">현금만</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">사테: 개당 <strong>1.2링깃</strong>, 최소 10개 주문 (소 · 닭 · 돼지 · 양)</div>
+              <div class="bullet">소고기 쌀국수 7.5링깃 / 카야 토스트 2.4링깃 / 아이스 아메리카노 3.2링깃</div>
+              <div class="bullet">예상 합계: 약 <strong>55링깃</strong></div>
+            </div>
+            <div class="money-box">
+              <span class="money-box-icon">💰</span>
+              <span>현금 결제만 가능 – 링깃 현금 준비!</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 16:00 이마고몰 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>16:00</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--purple); box-shadow:0 0 0 2px var(--purple);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card hotel">
+            <div class="card-head">
+              <span class="card-icon">🛍️</span>
+              <span class="card-title">이마고몰 쇼핑</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">🍫 <strong>버릴스 티라미수 초콜릿</strong> (선물용)</div>
+              <div class="bullet">마트 – 치약 등 생필품 (장바구니 챙기기)</div>
+              <div class="bullet">트래블카드 결제 사용</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 17:00 커피 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>17:00</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--amber); box-shadow:0 0 0 2px var(--amber);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card tip">
+            <div class="card-head">
+              <span class="card-icon">☕</span>
+              <span class="card-title">이마고몰 내 커피 여유</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet"><strong>ZUS커피</strong> (제우스커피, 이마고몰 1층)</div>
+              <div class="bullet">스타벅스 등 다수 카페 위치</div>
+              <div class="bullet">이마고몰 맞은편 카페거리도 있음</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 18:30 해산물 뷔페 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>18:30</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--green); box-shadow:0 0 0 2px var(--green);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card meal">
+            <div class="card-head">
+              <span class="card-icon">🦐</span>
+              <span class="card-title">저녁 – 리조트 해산물 디너 뷔페</span>
+              <span class="badge badge-green">25% 할인 쿠폰</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">웰컴 쿠폰 25% 할인 적용</div>
+              <div class="bullet">버터 웻 새우 &middot; 새우튀김 추천 🍤</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /slide2 -->
+
+
+    <!-- ========== DAY 4 ========== -->
+    <div class="slide" id="slide4">
+      <div class="slide-header">
+        <div class="day-label">DAY 4 &middot; June 14, Sunday</div>
+        <div class="day-title">🕌 시내투어 &amp; 🌟 반딧불 투어</div>
+        <div class="day-theme">도심투어 → 맹그로브 → 반딧불 체험 → 마사지 → 공항</div>
+      </div>
+
+      <div class="schedule">
+
+        <!-- 8:30 조식 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>08:30</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--green); box-shadow:0 0 0 2px var(--green);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card meal">
+            <div class="card-head">
+              <span class="card-icon">🍳</span>
+              <span class="card-title">조식 – Café TATU</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11:00 짐 싸기 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>11:00</span></div>
+          <div class="sched-line"><div class="sched-dot"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card">
+            <div class="card-head">
+              <span class="card-icon">🧳</span>
+              <span class="card-title">리조트 산책 &amp; 짐 싸기 &amp; 휴식</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">도심투어 오후 1시 30분 탑승 준비</div>
+            </div>
+            <div class="money-box">
+              <span class="money-box-icon">💰</span>
+              <span>블루모스크·핑크모스크·주청사 관람<br>1인당 50링깃 → 총 <strong>200링깃</strong> 가이드에게 전달</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12:00 점심 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>12:00</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--green); box-shadow:0 0 0 2px var(--green);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card meal">
+            <div class="card-head">
+              <span class="card-icon">🥢</span>
+              <span class="card-title">점심 – 샹팰리스</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">도심투어 방식 재확인 (간단 투어 or 그랩 이동)</div>
+              <div class="bullet" style="color:#dc2626;">⚠️ 탄탄투어에 반드시 사전 연락할 것</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 13:30 도심투어 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>13:30</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--sky); box-shadow:0 0 0 2px var(--sky);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card activity">
+            <div class="card-head">
+              <span class="card-icon">🕌</span>
+              <span class="card-title">도심투어 출발 – 리조트 앞 픽업</span>
+              <span class="badge badge-green">반딧불투어 결제완료</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">블루모스크 &middot; 핑크모스크 &middot; 주청사 관람</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 16:20 웰컴티 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>16:20</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--amber); box-shadow:0 0 0 2px var(--amber);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card tip">
+            <div class="card-head">
+              <span class="card-icon">🍵</span>
+              <span class="card-title">웰컴티 &amp; 간식</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 16:45 맹그로브 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>16:45</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--green); box-shadow:0 0 0 2px var(--green);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card activity">
+            <div class="card-head">
+              <span class="card-icon">🐒</span>
+              <span class="card-title">맹그로브 투어 &amp; 저녁식사</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">🐒 원숭이 만나기</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 17:50 반딧불 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>17:50</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--accent); box-shadow:0 0 0 2px var(--accent);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card flight">
+            <div class="card-head">
+              <span class="card-icon">✨</span>
+              <span class="card-title">석양 관람 &amp; 반딧불 체험</span>
+              <span class="badge badge-orange">결제완료 192,400원</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">🌅 저녁 노을 + 🌟 반딧불 야경</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 20:00 마사지 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>20:00</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--purple); box-shadow:0 0 0 2px var(--purple);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card hotel">
+            <div class="card-head">
+              <span class="card-icon">🦶</span>
+              <span class="card-title">투어 후 발마사지 – 파라다이스 마사지</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">4인 총 <strong>224링깃</strong></div>
+              <div class="bullet">또는 공항으로 바로 이동 → 1층(도착층) KFC / 던킨에서 휴식</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 22:00 공항 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>22:00</span></div>
+          <div class="sched-line"><div class="sched-dot"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card transport">
+            <div class="card-head">
+              <span class="card-icon">🛫</span>
+              <span class="card-title">코타키나발루 국제공항 이동</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">공항 1층(도착층) KFC / 던킨에서 대기 가능</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /slide3 -->
+
+
+    <!-- ========== DAY 5 ========== -->
+    <div class="slide" id="slide5">
+      <div class="slide-header">
+        <div class="day-label">DAY 5 &middot; June 15, Monday</div>
+        <div class="day-title">✈️ 귀국 – 코타키나발루 → 인천</div>
+        <div class="day-theme">새벽 비행기로 출발 → 인천공항 도착 → 집으로</div>
+      </div>
+
+      <div class="schedule">
+
+        <!-- 00:00 게이트 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>00:00</span></div>
+          <div class="sched-line"><div class="sched-dot"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card transport">
+            <div class="card-head">
+              <span class="card-icon">🚪</span>
+              <span class="card-title">탑승 게이트 이동</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 00:30 비행기 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>00:30</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--accent); box-shadow:0 0 0 2px var(--accent);"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card flight">
+            <div class="card-head">
+              <span class="card-icon">✈️</span>
+              <span class="card-title">제주항공 7C2604 탑승</span>
+              <span class="badge badge-orange">비행 5시간 20분</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">코타키나발루(BKI) → 인천(ICN)</div>
+            </div>
+
+            <!-- 좌석 다이어그램 -->
+            <div class="seat-box">
+              <div class="seat-flight-info">🪑 좌석 배치 – Row 17</div>
+              <div class="seat-plane-body">
+                <div class="seat-col-labels">
+                  <div class="row-num"></div>
+                  <div class="seat-col-label">A</div>
+                  <div class="seat-col-label">B</div>
+                  <div class="seat-col-label">C</div>
+                  <div class="seat-col-aisle"></div>
+                  <div class="seat-col-label">D</div>
+                  <div class="seat-col-label">E</div>
+                  <div class="seat-col-label">F</div>
+                </div>
+                <div class="seat-row-container">
+                  <div class="row-num">16</div>
+                  <div class="seat-cell seat-empty">16A</div>
+                  <div class="seat-cell seat-empty">16B</div>
+                  <div class="seat-cell seat-empty">16C</div>
+                  <div class="seat-aisle"></div>
+                  <div class="seat-cell seat-empty">16D</div>
+                  <div class="seat-cell seat-empty">16E</div>
+                  <div class="seat-cell seat-empty">16F</div>
+                </div>
+                <div class="seat-row-container">
+                  <div class="row-num" style="color:var(--accent);font-weight:800;">17</div>
+                  <div class="seat-cell seat-taken">재인</div>
+                  <div class="seat-cell seat-taken">재우</div>
+                  <div class="seat-cell seat-taken">엄마</div>
+                  <div class="seat-aisle"></div>
+                  <div class="seat-cell seat-taken">아빠</div>
+                  <div class="seat-cell seat-empty">17E</div>
+                  <div class="seat-cell seat-empty">17F</div>
+                </div>
+                <div class="seat-row-container">
+                  <div class="row-num">18</div>
+                  <div class="seat-cell seat-empty">18A</div>
+                  <div class="seat-cell seat-empty">18B</div>
+                  <div class="seat-cell seat-empty">18C</div>
+                  <div class="seat-aisle"></div>
+                  <div class="seat-cell seat-empty">18D</div>
+                  <div class="seat-cell seat-empty">18E</div>
+                  <div class="seat-cell seat-empty">18F</div>
+                </div>
+              </div>
+              <div class="seat-legend">
+                <div class="legend-item"><span class="legend-swatch" style="background:var(--ocean);"></span> 우리 가족 (17A·B·C·D)</div>
+                <div class="legend-item"><span class="legend-swatch" style="background:#f1f5f9;border:1px solid #e2e8f0;"></span> 비어있음</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 06:50 인천 도착 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>06:50</span></div>
+          <div class="sched-line"><div class="sched-dot"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card">
+            <div class="card-head">
+              <span class="card-icon">🛬</span>
+              <span class="card-title">인천공항 T1 도착</span>
+            </div>
+            <div class="card-detail">
+              <div class="bullet">수하물 찾기</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 09:00 공항 밴 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>09:00</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:#94a3b8; box-shadow:0 0 0 2px #94a3b8;"></div><div class="sched-line-bar"></div></div>
+          <div class="sched-card transport">
+            <div class="card-head">
+              <span class="card-icon">🚐</span>
+              <span class="card-title">공항 밴 (신랑 예약 필요)</span>
+              <span class="badge badge-gray">약 90분</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10:30 귀가 -->
+        <div class="sched-item">
+          <div class="sched-time"><span>10:30</span></div>
+          <div class="sched-line"><div class="sched-dot" style="background:var(--green); box-shadow:0 0 0 2px var(--green);"></div></div>
+          <div class="sched-card meal">
+            <div class="card-head">
+              <span class="card-icon">🏠</span>
+              <span class="card-title">공항 → 집 도착! 수고하셨습니다 😊</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /slide4 -->
+
+
+    <!-- ========== 기타 참고사항 ========== -->
+    <div class="slide" id="slide6">
+      <div class="misc-header">
+        <div class="day-label">REFERENCE &middot; 기타 참고사항</div>
+        <div class="day-title">📋 여행 준비 체크리스트</div>
+        <div class="day-theme">출발 전 반드시 확인!</div>
+      </div>
+
+      <div class="misc-body">
+
+        <!-- 환율 -->
+        <div class="rate-box" style="margin-bottom:12px;">
+          <div class="rate-big">1 MYR ≈ 370원</div>
+          <div class="rate-sub">말레이시아 링깃 기준 환율 (참고용)</div>
+        </div>
+
+        <!-- 준비 체크리스트 -->
+        <div class="misc-section">
+          <div class="misc-section-title">✅ 준비 체크리스트</div>
+          <div class="check-item">
+            <div class="check-num">1</div>
+            <div>공항 리무진 예약 (갈 때) / 올 때는 밴 예약 – <strong>신랑</strong></div>
+          </div>
+          <div class="check-item">
+            <div class="check-num">2</div>
+            <div>선물 리스트 정리</div>
+          </div>
+          <div class="check-item">
+            <div class="check-num">3</div>
+            <div>일정 재정비 (둘째날 도심지 일정 체크) 및 환전 금액 계산</div>
+          </div>
+          <div class="check-item">
+            <div class="check-num">4</div>
+            <div>마사지 예약 – <strong>Chi Spa</strong></div>
+          </div>
+          <div class="check-item">
+            <div class="check-num check-done">5</div>
+            <div>투어 예약 후 호텔 차량 픽업 요청 / 반딧불투어 할인 <strong>192,400원</strong> 결제 <span class="badge badge-green" style="margin-left:2px;">완료</span></div>
+          </div>
+          <div class="check-item">
+            <div class="check-num">6</div>
+            <div>트래블카드 만들기 &amp; 그랩 앱 카드 등록</div>
+          </div>
+          <div class="check-item">
+            <div class="check-num">7</div>
+            <div>호텔 내 식당 예약 (선셋바 / 해산물 뷔페) &amp; 웰컴 쿠폰 25% 다운</div>
+          </div>
+        </div>
+
+        <!-- 챙겨갈 것 -->
+        <div class="misc-section">
+          <div class="misc-section-title">🎒 챙겨갈 한국 음식</div>
+          <div class="gift-item"><span>🍜</span><span>컵라면 (사피섬 뜨거운 물 2링깃 결제)</span></div>
+          <div class="gift-item"><span>🌿</span><span>김</span></div>
+          <div class="gift-item"><span>🍚</span><span>햇반</span></div>
+          <div class="gift-item"><span>🍱</span><span>컵반 (참치마요 / 미역국 / 라면볶이 / 치즈볶이)</span></div>
+        </div>
+
+        <!-- 선물 리스트 -->
+        <div class="misc-section">
+          <div class="misc-section-title">🎁 선물 리스트 (이마고몰 구입)</div>
+          <div class="gift-item"><span>🐟</span><span>멸치과자 3~4봉</span></div>
+          <div class="gift-item"><span>🍫</span><span>버릴스 티라미수 초콜릿 10개</span></div>
+          <div class="gift-item"><span>🧀</span><span>렉서스 치즈과자</span></div>
+          <div class="gift-item"><span>🪥</span><span>달리 치약 10개 (이마고몰)</span></div>
+          <div class="gift-item" style="color:#64748b; font-size:0.73rem; margin-top:6px;">
+            <span>📝</span><span>신랑 회사 / 나 회사 / 재인 친구 – 개수 정리 후 트래블카드로 구입</span>
+          </div>
+        </div>
+
+        <!-- 유용한 정보 -->
+        <div class="misc-section">
+          <div class="misc-section-title">ℹ️ 유용한 정보</div>
+          <div class="check-item">
+            <div class="check-star">🏨</div>
+            <div>샹그릴라 탄중아루 – 비타민81 여행후기: 뷔페·선셋바·레스토랑 예약방법부터 샹그릴라의 모든 것 (네이버 카페 참고)</div>
+          </div>
+          <div class="check-item">
+            <div class="check-star">🐠</div>
+            <div>스타마리나 상세 블로그: blog.naver.com/nurihapp/224121255967</div>
+          </div>
+          <div class="check-item">
+            <div class="check-star">🍢</div>
+            <div>유잇청 블로그: blog.naver.com/algotrip/224056664728</div>
+          </div>
+        </div>
+
+        <div style="height:20px;"></div>
+      </div>
+    </div><!-- /slide5 -->
+
+  </div><!-- /slides-track -->
+</div><!-- /slides-outer -->
+
+<!-- BOTTOM DOTS -->
+<div class="bottom-dots" id="bottomDots">
+  <div class="dot-item active" style="width:22px;" onclick="goTo(0)"></div>
+  <div class="dot-item" style="width:7px;" onclick="goTo(1)"></div>
+  <div class="dot-item" style="width:7px;" onclick="goTo(2)"></div>
+  <div class="dot-item" style="width:7px;" onclick="goTo(3)"></div>
+  <div class="dot-item" style="width:7px;" onclick="goTo(4)"></div>
+  <div class="dot-item" style="width:7px;" onclick="goTo(5)"></div>
+  <div class="dot-item" style="width:7px;" onclick="goTo(6)"></div>
+</div>
+
+<script>
+  const TOTAL = 7;
+  let current = 0;
+  let startX = 0;
+  let startY = 0;
+  let isDragging = false;
+  let dragDist = 0;
+
+  const track = document.getElementById('slidesTrack');
+  const tabs = document.querySelectorAll('.tab');
+  const dots = document.querySelectorAll('.dot-item');
+  const tabBar = document.getElementById('dayTabs');
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= TOTAL) return;
+    current = idx;
+    track.style.transform = `translateX(-${current * 100}vw)`;
+    tabs.forEach((t, i) => t.classList.toggle('active', i === current));
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+      d.style.width = i === current ? '22px' : '7px';
+    });
+    // scroll tab into view
+    tabs[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    // reset scroll position of slide
+    document.getElementById('slide' + current).scrollTop = 0;
+  }
+
+  // Touch / swipe
+  const outer = document.getElementById('slidesOuter');
+
+  outer.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    isDragging = true;
+    dragDist = 0;
+    track.style.transition = 'none';
+  }, { passive: true });
+
+  outer.addEventListener('touchmove', e => {
+    if (!isDragging) return;
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+      dragDist = dx;
+      track.style.transform = `translateX(calc(-${current * 100}vw + ${dx}px))`;
+    }
+  }, { passive: true });
+
+  outer.addEventListener('touchend', () => {
+    isDragging = false;
+    track.style.transition = 'transform 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    if (dragDist < -50 && current < TOTAL - 1) goTo(current + 1);
+    else if (dragDist > 50 && current > 0) goTo(current - 1);
+    else goTo(current);
+  });
+
+  // Keyboard nav (desktop)
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+  });
+</script>
+</body>
+</html>
